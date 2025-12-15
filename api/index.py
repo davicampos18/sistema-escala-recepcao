@@ -92,7 +92,7 @@ def escala():
     
     resultado = pesquisa.get_escala()
 
-    fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro = pesquisa.separar_por_mes(resultado)
+    janeiro, fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro = pesquisa.separar_por_mes(resultado)
 
     return render_template(
         "escala.html",
