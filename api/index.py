@@ -96,6 +96,7 @@ def escala():
 
     return render_template(
         "escala.html",
+        janeiro=janeiro,
         fevereiro=fevereiro,
         marco=marco,
         abril=abril,
