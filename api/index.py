@@ -39,6 +39,7 @@ class Pesquisas_escala():
         return self.planilha.get_all_records()
 
     def separar_por_mes(self, escala):
+        janeiro = []
         fevereiro =[]
         marco = []
         abril = []
@@ -54,7 +55,9 @@ class Pesquisas_escala():
         for row in escala:
             try:
                 mes = datetime.strptime(row['Data'], '%d/%m').month
-                if mes in [2]:
+                if mes in [1]:
+                    janeiro.append(row)
+                elif mes in [2]:
                     fevereiro.append(row)
                 elif mes in [3]:
                     marco.append(row)
@@ -79,7 +82,7 @@ class Pesquisas_escala():
             except ValueError:
                 continue
 
-        return fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro
+        return janeiro, fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro
 
 
 
