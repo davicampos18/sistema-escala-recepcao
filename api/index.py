@@ -10,7 +10,6 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-# Para o Vercel
 creds_json = os.getenv("GOOGLE_CREDENTIALS")
 creds_dict = json.loads(creds_json)
 
@@ -18,17 +17,6 @@ credentials = Credentials.from_service_account_info(
     creds_dict,
     scopes=SCOPES
 )
-
-# Máquina Local
-
-# service_account_file = "/home/davi_campos/Downloads/ebdrodoviaa-main/exalted-ability-436015-e8-1659de34e562.json"
-
-# scopes = [
-#     "https://www.googleapis.com/auth/spreadsheets",
-#     "https://www.googleapis.com/auth/drive",
-# ]
-
-# credentials = Credentials.from_service_account_file(service_account_file, scopes=scopes)
 
 gc = gspread.authorize(credentials)
 spreadsheet = gc.open("Escala da Recepção")
@@ -48,11 +36,9 @@ class Pesquisas_escala():
             raise ValueError(f"Planilha '{planilha}' não encontrada. Verifique o nome.")
 
     def get_escala(self):
-        # Obtém todos os dados da planilha
         return self.planilha.get_all_records()
 
     def separar_por_mes(self, escala):
-        # Separar os dados da escala por trimestre
         fevereiro =[]
         marco = []
         abril = []
@@ -67,7 +53,6 @@ class Pesquisas_escala():
 
         for row in escala:
             try:
-                # Extrair o mês da data (formato DD/MM)
                 mes = datetime.strptime(row['Data'], '%d/%m').month
                 if mes in [2]:
                     fevereiro.append(row)
@@ -92,7 +77,6 @@ class Pesquisas_escala():
                 elif mes in [12]:
                     dezembro.append(row)
             except ValueError:
-                # Se houver erro de data, não adiciona à nenhuma lista
                 continue
 
         return fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro
@@ -105,7 +89,6 @@ def escala():
     
     resultado = pesquisa.get_escala()
 
-    # Separando os resultados por trimestre
     fevereiro, marco, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro = pesquisa.separar_por_mes(resultado)
 
     return render_template(
